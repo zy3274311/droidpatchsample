@@ -15,3 +15,18 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keepattributes *Annotation*
+-keepattributes Signature
+
+-dontwarn com.qihoo.library.**
+-keep class com.qihoo.library.** {*;}
+
+# for v4, v7
+-dontwarn android.support.v4.**
+-keep class android.support.v4.** { *; }
+-keep interface android.support.v4.** { *; }
+
+-dontwarn android.support.v7.**
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }

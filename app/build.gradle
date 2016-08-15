@@ -2,29 +2,47 @@ apply plugin: 'com.android.application'
 //inject code to class files
 apply plugin: 'plugin-transform-inject'
 
+def keystoreFile = rootProject.file("sample.keystore")
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
-
     defaultConfig {
         applicationId "com.qihoo.droidpatchsample"
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'sample'
+            keyPassword 'sample'
+            storeFile keystoreFile
+            storePassword 'sample'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
     //pre insert dex to pathlist
     compile 'com.qihoo.library:patchlibrary:1.0.5'
+}
+
+patchConfigs {
+    //是否创建patch补丁包
+    packPatchDexEnable = false
 }
